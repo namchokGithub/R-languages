@@ -8,4 +8,8 @@ library(dplyr)
 
 #------------------ End library -------------------- #
 
+# load new data
 newStarwar <- select(starwars, -films, -vehicles, -starships)
+
+# filer gender equal "male"
+swGender <- filter(newStarwar, gender=="male")
