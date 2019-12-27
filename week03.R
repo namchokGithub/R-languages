@@ -37,5 +37,9 @@ swNewHeight <- mutate(newStarwar, height = ifelse(height < 75 | height > 200, NA
 swNewRemoveNA <- summarise(newStarwar, mean_ht = mean(height, na.rm = TRUE)
                                       ,mean_mass = mean(mass, na.rm = TRUE))
 
+# Group by # by gender and find mean
+swGroup <- group_by(newStarwar, gender)
+swMeanGender <- summarise(swGroup, mean_ht = mean(height, na.rm = TRUE)
+                                  ,mean_mass = mean(mass, na.rm = TRUE))
 
 
