@@ -42,4 +42,12 @@ swGroup <- group_by(newStarwar, gender)
 swMeanGender <- summarise(swGroup, mean_ht = mean(height, na.rm = TRUE)
                                   ,mean_mass = mean(mass, na.rm = TRUE))
 
+# %>% pipe
+swPipe <- newStarwar %>% filter(gender=="female") %>% 
+                         group_by(species) %>% 
+                         summarise(mean_ht = mean(height, na.rm = TRUE))
+
+
+
+
 
