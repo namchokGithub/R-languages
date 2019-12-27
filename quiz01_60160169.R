@@ -30,9 +30,8 @@ three <- data %>% distinct(rank) %>%
                                             ifelse(rank=="AsstProf","Assistant Professor","Professor")))
 
 #### No.4 #####
-four <- data %>%
-        filter(yrs.service >= 20 & yrs.since.phd >= 20) %>% 
-        group_by(rank, sex) %>% summarize(mean_salary = mean(salary))
+four <- data %>% filter(yrs.service >= 20 & yrs.since.phd >= 20) %>% 
+                 group_by(rank, sex) %>% summarize(mean_salary = mean(salary))
 
 #### No.5 #####
 five <- gather(four, key="variable", value="value", sex:mean_salary )
