@@ -47,6 +47,12 @@ swPipe <- newStarwar %>% filter(gender=="female") %>%
                          group_by(species) %>% 
                          summarise(mean_ht = mean(height, na.rm = TRUE))
 
+# NO ADVICE!!!!!!!!!
+cleaningData <- na.omit(newStarwar) # cleaning data
+swPipeCn <- cleaningData %>% filter(gender=="female") %>% 
+                         group_by(species) %>% 
+                         summarise(mean_ht = mean(height, na.rm = TRUE))
+
 
 
 
