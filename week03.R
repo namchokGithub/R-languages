@@ -31,7 +31,7 @@ newStarwar <- select(starwars, -films, -vehicles, -starships)
 # swNewColumn <- mutate(newStarwar, NewColumn = ifelse(eye_color %in% c("black", "blue", "brown"), eye_color,"other"))
 
 # Replace column
-swReplaceColumn <- mutate(newStarwar, eye_color = ifelse(eye_color %in% c("black", "blue", "brown"), eye_color,"other"))
+# swReplaceColumn <- mutate(newStarwar, eye_color = ifelse(eye_color %in% c("black", "blue", "brown"), eye_color,"other"))
 
 
 # | is or, & is and
@@ -59,9 +59,14 @@ swReplaceColumn <- mutate(newStarwar, eye_color = ifelse(eye_color %in% c("black
 #                          group_by(species) %>% 
 #                          summarise(mean_ht = mean(height, na.rm = TRUE))
 
-########## Reshape
-swLongData <- gather(newStarwar, key="", value="",  )
+########## Reshaping data ###############
 
+# Reshape
+swLongData <- gather(newStarwar, key="variable", value="value")
 
+# Reshape to old shape
+# swOldShape <- spread(swLongData, variable, value)
 
+# Reshape Height to eye_color
+swReshapeHtoE <- gather(newStarwar, key="variable", value="value", height:eye_color)
 
