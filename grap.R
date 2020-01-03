@@ -50,3 +50,16 @@ ggplot(data = plotdata, mapping = aes(x=exper, y=wage, color = sex)) + geom_poin
          , caption = "source: http://mosix-web.org"
          , x = "Years of Experirence", y = "Hourly Wage", color = "Gender")
 
+# Theme
+ggplot(data = plotdata, mapping = aes(x=exper, y=wage, color = sex)) + geom_point(alpha = 0.5, size = 1) +
+    geom_smooth(method = "lm", size = 0.2, se = FALSE) + 
+    scale_x_continuous(breaks = seq(0, 60, 10)) + 
+    scale_y_continuous(breaks = seq(0, 30, 5), labels = scales::dollar) + 
+    scale_color_manual(values = c("red", "blue")) +
+    facet_wrap(~sector) + 
+    labs(title = "Relationship between wages and experience"
+         , subtitle = "Current Poplations Survey"
+         , caption = "source: http://mosix-web.org"
+         , x = "Years of Experirence", y = "Hourly Wage", color = "Gender") + 
+    theme_light()
+
