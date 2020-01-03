@@ -2,6 +2,7 @@
 
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 data(CPS85, package = "mosaicData")
 
@@ -63,3 +64,56 @@ ggplot(data = plotdata, mapping = aes(x=exper, y=wage, color = sex)) + geom_poin
          , x = "Years of Experirence", y = "Hourly Wage", color = "Gender") + 
     theme_light()
 
+
+# Barchart
+data(Marriage, package = "mosaicData")
+# plot the distribution of race
+ggplot(Marriage, aes(x = race)) + 
+    geom_bar()
+
+# plot the distribution of race with colours and label
+ggplot(Marriage, aes(x = race)) + 
+    geom_bar(fill = "cornflowerblue",alpha = 0.8 , color = "yellow" ) + 
+    labs(title = "Test" ,x = "???????????????????????????" ,y = "Frequency")
+
+# Percent
+ggplot(Marriage, aes(x = race, y = ..count.. / sum(..count..))) + 
+    geom_bar(fill = "cornflowerblue",alpha = 0.8 , color = "yellow" ) + 
+    labs(title = "Test" ,x = "Race" ,y = "Percent") + 
+    scale_y_continuous(labels = scales::percent)
+
+# newdata <- group_by(Marriage, race) %>% count() %>% mutate(percentage = n/sum(n))
+
+# Sorting 
+plotdata <- Marriage %>% count(race)
+
+# stat = "identity" = no calculate
+
+# calculate count
+# ggplot(plotdata, aes(x = reorder(race, n), y = n)) + 
+#    geom_bar(fill = "red",alpha = 0.8 , color = "yellow" ) + 
+#    labs(title = "Test" ,x = "Race" ,y = "Percent")
+# Error 404
+# Replace counting
+
+# small to big
+ggplot(plotdata, aes(x = reorder(race, n), y = n)) + 
+    geom_bar(stat = "identity", fill = "red",alpha = 0.8 , color = "yellow" ) + 
+    labs(title = "Test" ,x = "Race" ,y = "Percent")
+
+# big to small
+ggplot(plotdata, aes(x = reorder(race, -n), y = n)) + 
+    geom_bar(stat = "identity", fill = "red",alpha = 0.8 , color = "yellow" ) + 
+    labs(title = "Test" ,x = "Race" ,y = "Percent")     
+
+# Race
+newdata <- group_by(Marriage, race) %>% count() %>% mutate(percentage = n/sum(newdata$n) * 100)
+
+# officialTitle
+officialTitleData <- group_by(Marriage, officialTitle) %>% count() %>% mutate(percentage = n/sum(officialTitleData$n))
+plotdataOfficialTitle <- Marriage %>% count(officialTitle)
+ggplot(plotdataOfficialTitle, aes(x = reorder(officialTitle, -n), y = officialTitleData$percentage)) + 
+    geom_bar(stat = "identity", fill = c("#3F7FBF","#3F3FBF","#BF3FBF", "yellow","#7FBF3F","#BF7F3F","#7F3FBF","#3F3FBF","#3F7FBF"), alpha = 0.8 , color = "blue" ) + 
+    labs(title = "officialTitle" ,x = "officialTitle" ,y = "Percentage") + geom_text(aes(label = n), vjust=-0.5)+ 
+    scale_y_continuous(labels = scales::percent)
+ 
