@@ -29,6 +29,11 @@ three <- data %>% distinct(rank) %>%
                    mutate(fullRank = ifelse(rank=="AssocProf","Associate Professor", 
                                             ifelse(rank=="AsstProf","Assistant Professor","Professor")))
 
+rankRow <- distinct(data, rank)
+fullRankRow <- mutate(rankRow, fullRank = ifelse(rank=="AssocProf","Associate Professor", 
+                                     ifelse(rank=="AsstProf","Assistant Professor","Professor")))
+answer <- data.frame(fullRankRow)
+
 #### No.4 #####
 four <- data %>% filter(yrs.service >= 20 & yrs.since.phd >= 20) %>% 
                  group_by(rank, sex) %>% summarize(mean_salary = mean(salary))
