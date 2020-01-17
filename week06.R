@@ -77,6 +77,32 @@ ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) +
         geom_point(color= "steelblue") + 
         geom_smooth(color = "tomato")
 
+# scatterplot with loess smoothed line 
+# and better labeling and color 
+ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) + 
+    geom_point(color="cornflowerblue", size = 2, alpha = .6) + 
+    geom_smooth(size = 1.5, color = "darkgrey") + 
+    scale_y_continuous(label = scales::dollar, limits = c(50000, 250000)) +
+    scale_x_continuous(breaks = seq(0, 60, 10), limits = c(0, 60)) + 
+    labs(x = "Years Since PhD", y = "", title = "Experience vs. Salary", subtitle = "9-month salary for 2008-2009") + 
+    theme_minimal()
+
+######### Line plot ###########
+data(gapminder, package="gapminder")
+# Select US cases 
+plotdata <- filter(gapminder, country == "United States")
+# simple line plot 
+ggplot(plotdata, aes(x = year, y = lifeExp)) + geom_line()
+
+# line plot with points 
+# and improved labeling 
+ggplot(plotdata, aes(x = year, y = lifeExp)) + 
+    geom_line(size = 1.5, color = "lightgrey") + 
+    geom_point(size = 3, color = "steelblue") + 
+    labs(y = "Life Expectancy (years)", x = "Year", 
+         title = "Life expectancy changes over time", 
+         subtitle = "United States (1952-2007)", 
+         caption = "Source: http://www.gapminder.org/data/")
 
 
 
