@@ -131,7 +131,7 @@ ggplot(Marriage, aes(x = age)) +
     labs(title = "Participants by age", y = "Proportion", x = "Age") 
 
 # Plot ages as a dot plot using 
-# gold dots with black borders 
+# gold dots with black borders
 
 ggplot(Marriage, aes(x = age)) + 
     geom_dotplot(fill = "gold", color = "black", binwidth = 2) +
