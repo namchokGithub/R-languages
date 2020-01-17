@@ -9,7 +9,7 @@ library(scales) # Percent.
 
 # --------------------------------- #
 
-# stacked bar chart 
+###### stacked bar chart  ######
 ggplot(mpg, aes(x = class, fill = drv)) + geom_bar(position = "stack")
 
 # grouped bar plot 
@@ -87,6 +87,7 @@ ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) +
     labs(x = "Years Since PhD", y = "", title = "Experience vs. Salary", subtitle = "9-month salary for 2008-2009") + 
     theme_minimal()
 
+    
 ######### Line plot ###########
 data(gapminder, package="gapminder")
 # Select US cases 
@@ -97,16 +98,61 @@ ggplot(plotdata, aes(x = year, y = lifeExp)) + geom_line()
 # line plot with points 
 # and improved labeling 
 ggplot(plotdata, aes(x = year, y = lifeExp)) + 
-    geom_line(size = 1.5, color = "lightgrey") + 
+    geom_line(size = 1.5, color = "lightblue") + 
     geom_point(size = 3, color = "steelblue") + 
     labs(y = "Life Expectancy (years)", x = "Year", 
          title = "Life expectancy changes over time", 
          subtitle = "United States (1952-2007)", 
-         caption = "Source: http://www.gapminder.org/data/")
+         caption = "Source: http://www.gapminder.org/data/")+
+    theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
 
 
 
+##### Home work #####
+
+# change the order the levels for the categorical variable "class" 
+mpg$manufacturer = factor(mpg$manufacturer, levels = c("audi", "chevrolet", "dodge", "ford", "honda", "hyundai", "jeep"
+                                         , "land rover", "lincoln", "mercury", "subaru", "toyota", "volkswagen"))
+
+# create a summary dataset 
+plotdata <- mpg %>% group_by(manufacturer, year) %>%
+    summarize(n = n()) %>% 
+    mutate(pct = n/sum(n), lbl = scales::percent(pct)) 
+
+ggplot(plotdata, aes(x = factor(manufacturer, levels = c("audi", "chevrolet", "dodge", "ford", "honda", "hyundai", "jeep"
+                                                  , "land rover", "lincoln", "mercury", "subaru", "toyota", "volkswagen")), 
+                     y = pct, fill = factor(year, levels = c("1999", "2008"), labels = c("1999", "2008")))) +
+    
+    geom_bar(stat = "identity", position = "fill") + 
+    scale_y_continuous(breaks = seq(0, 1, .2), labels = percent) + 
+    geom_text(aes(label = lbl), size = 3, position = position_stack(vjust = 0.5)) + 
+    scale_fill_brewer(palette = "Accent") + 
+    labs(y = "Percent", fill = "Year", x = "Class", title = "Year sales by Manufaclurer") + 
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5))
                    
                    
                    
                                                    
+
+##### Barchart #####
+
+data(Salaries, package="carData")
+# calculate mean salary for each rank 
+plotdata <- Salaries %>% group_by(rank) %>% summarize(mean_salary = mean(salary))
+                                                      
+# plot mean salaries 
+ggplot(plotdata, aes(x = rank, y = mean_salary)) + geom_bar(stat = "identity")
+
+# plot mean salaries in a more attractive fashion 
+ggplot(plotdata, aes(x = factor(rank, labels = c("Assistant\nProfessor", "Associate\nProfessor", "Full\nProfessor")), y = mean_salary)) + 
+    geom_bar(stat = "identity", fill = c("cornflowerblue", "lightblue", "green")) + 
+    geom_text(aes(label = dollar(mean_salary)), vjust = -0.25) + 
+    scale_y_continuous(breaks = seq(0, 130000, 20000), label = dollar) + 
+    labs(title = "Mean Salary by Rank", subtitle = "9-month academic salary for 2008-2009", x = "", y = "")
+
+######  Grouped kernel density plots ###
+
+
+
+                                 
