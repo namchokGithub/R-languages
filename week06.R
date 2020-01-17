@@ -34,5 +34,53 @@ ggplot(mpg, aes(x = factor(class, levels = c("2seater", "subcompact", "compact",
 # CATEGORICAL VS. CATEGORICAL 
 
 # change the order the levels for the categorical variable "class" 
-mpg$class = factor(mpg$class, levels = c("2seater", "subcompact", "compact", "midsize", "minivan", "suv", "pickup")  
+mpg$class = factor(mpg$class, levels = c("2seater", "subcompact", "compact", "midsize", "minivan", "suv", "pickup"))
+
+# create a summary dataset 
+plotdata <- mpg %>% group_by(class, drv) %>%
+                summarize(n = n()) %>% 
+                mutate(pct = n/sum(n), lbl = scales::percent(pct)) 
+plotdata
+
+ggplot(plotdata, aes(x = factor(class, levels = c("2seater", "subcompact", "compact", "midsize", "minivan", "suv", "pickup")), 
+                     y = pct, fill = factor(drv, levels = c("f", "r", "4"), labels = c("front-wheel", "rear-wheel", "4-wheel")))) +
+    geom_bar(stat = "identity", position = "fill") + 
+    scale_y_continuous(breaks = seq(0, 1, .2), label = percent) + 
+    geom_text(aes(label = lbl), size = 3, position = position_stack(vjust = 0.5)) + 
+    scale_fill_brewer(palette = "Set2") + 
+    labs(y = "Percent", fill = "Drive Train", x = "Class", title = "Automobile Drive by Class") + 
+    theme_minimal()
+                   
+                   
+data(Salaries, package="carData")
+# simple scatterplot 
+ggplot(Salaries, aes(x = yrs.since.phd,y = salary)) + geom_point()
+
+# enhanced scatter plot 
+ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) + geom_point(color="cornflowerblue", size = 2, alpha=.8) + 
+    scale_y_continuous(label = scales::dollar, limits = c(50000, 250000)) + 
+    scale_x_continuous(breaks = seq(0, 60, 10), limits=c(0, 60)) + 
+    labs(x = "Years Since PhD", y = "", title = "Experience vs. Salary", subtitle = "9-month salary for 2008-2009")
+
+
+# scatterplot with linear fit line 
+ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) +
+    geom_point(color= "steelblue") + geom_smooth(method = "lm")
+
+# scatterplot with quadratic line of best fit 
+ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) + 
+                geom_point(color= "steelblue") + 
+                geom_smooth(method = "lm", formula = y ~ poly(x, 2), color = "indianred3")
+
+# scatterplot with loess smoothed line 
+ggplot(Salaries, aes(x = yrs.since.phd, y = salary)) + 
+        geom_point(color= "steelblue") + 
+        geom_smooth(color = "tomato")
+
+
+
+
+                   
+                   
+                   
                                                    
