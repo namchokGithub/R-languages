@@ -153,6 +153,51 @@ ggplot(plotdata, aes(x = factor(rank, labels = c("Assistant\nProfessor", "Associ
 
 ######  Grouped kernel density plots ###
 
+# plot the distribution of salaries 
+# by rank using kernel density plots 
+ggplot(Salaries, aes(x = salary, fill = rank)) + 
+    geom_density(alpha = 0.4) + 
+    labs(title = "Salary distribution by rank")
+
+
+####### Box plots ######
+
+# plot the distribution of salaries by rank using boxplots 
+ggplot(Salaries, aes(x = rank, y = salary)) + 
+    geom_boxplot() + 
+    labs(title = "Salary distribution by rank")
+
+# plot the distribution of salaries by rank using boxplots 
+ggplot(Salaries, aes(x = rank, y = salary)) + 
+    geom_boxplot(notch = TRUE, fill = "cornflowerblue", alpha = .7) + 
+    labs(title = "Salary distribution by rank")
+
+
+###### violin #######
+
+# plot the distribution of salaries 
+# by rank using violin plots 
+ggplot(Salaries, aes(x = rank, y = salary)) + 
+    geom_violin() + 
+    labs(title = "Salary distribution by rank")
+
+
+# plot the distribution using violin and boxplots 
+ggplot(Salaries, aes(x = rank, y = salary)) + 
+    geom_violin(fill = "cornflowerblue") + 
+    geom_boxplot(width = .2, fill = "orange", outlier.color = "orange", outlier.size = 2) + 
+    labs(title = "Salary distribution by rank")
+
+
+
+
+
+
+
+
+
+
+
 
 
                                  
