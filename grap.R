@@ -96,7 +96,7 @@ plotdata <- Marriage %>% count(race)
 # Error 404
 # Replace counting
 
-# small to big/
+# small to big
 ggplot(plotdata, aes(x = reorder(race, n), y = n)) + 
     geom_bar(stat = "identity", fill = "red",alpha = 0.8 , color = "yellow" ) +
     labs(title = "Test" ,x = "Race" ,y = "Percent")
